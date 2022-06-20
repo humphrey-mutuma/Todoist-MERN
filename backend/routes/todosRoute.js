@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const {
   getTodos,
   createTodo,
@@ -8,6 +8,8 @@ const {
 } = require("../controllers/todoController");
 
 // get and create todos (they're in the same route)
-router.get("/", getTodos).post(createTodo);
-// update and delete todos in the same route
-router.put("/:id", updateTodo).delete(deleteTodo);
+router.route("/").get(getTodos).post(createTodo);
+
+router.route("/:id").put(updateTodo).delete(deleteTodo);
+
+module.exports = router;

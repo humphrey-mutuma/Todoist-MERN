@@ -2,19 +2,18 @@ const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv").config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5001;
+const { errorHandler } = require("./middleware/errorMiddleware");
 
 // middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // home route
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use("/", require("./routes/todosRoute"));
+
+// error middleware
+app.use(errorHandler);
 
 // start app on PORT
-app.listen(
-  PORT,
-  console.log(`server running http://localhost:${PORT}`)
-);
+app.listen(PORT, console.log(`server running http://localhost:${PORT}`));
