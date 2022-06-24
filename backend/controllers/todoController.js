@@ -1,24 +1,24 @@
 const asyncHandler = require("express-async-handler");
+const Todo = require("../models/todo");
 // get them todos
 
 const getTodos = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "get all todos" });
+  const todo = await Todo.find();
+  res.status(200).json(todo);
 });
 
 // create a todo
-// const createTodo = asyncHandler(async (req, res) => {
-//   res.status(200).json({ message: "get all todos" });
-// });
-
 const createTodo = asyncHandler(async (req, res) => {
-  const goal = req.body.text;
-  console.log(goal);
-  if (!goal) {
+  const todo = req.body.name;
+  if (!todo) {
     res.status(400);
-    throw new Error("Please add a goal");
+    throw new Error("Please add a todo");
   }
+  const createdTodo = await Todo.create({
+    name: todo,
+  });
 
-  res.status(200).json({ goal: goal });
+  res.status(201).json(createTodo);
 });
 
 // update a todo
