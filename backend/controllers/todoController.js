@@ -25,12 +25,26 @@ const createTodo = asyncHandler(async (req, res) => {
 
 // update a todo
 const updateTodo = asyncHandler(async (req, res) => {
-  const goalId = req.params.id;
-  if (!goalId) {
-    res.status(400);
-    throw new Error("Please add a goal ID");
+  // check if the todo exists in the database
+  const oldTodo = await Todo.findById(req.params.id);
+  if (!oldTodo) {
+    res.status(404);
+    throw new Error("Todo does not exist");
   }
-  res.status(200).json({ message: `update  todo ${goalId}` });
+  // update
+  const newName = req.body.name;
+
+  if (!newName) {
+    res.status(400);
+    throw new Error("Please add a todo name");
+  }
+  const updatedTodo = await Todo.findByIdAndUpdate(todoId, {
+    name: newName,
+  });
+
+  if (updatedTodo) {
+    res.status(200).json(updatedTodo);
+  }
 });
 
 // delete a todo

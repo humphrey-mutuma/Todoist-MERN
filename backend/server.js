@@ -14,8 +14,10 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// home route
+// api routes
 app.use("/api/todos", require("./routes/todosRoute"));
+//handle 404 responses?
+app.use("*", require("./routes/404"));
 
 // error middleware
 app.use(errorHandler);
