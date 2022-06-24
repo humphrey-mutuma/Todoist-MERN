@@ -18,7 +18,9 @@ const createTodo = asyncHandler(async (req, res) => {
     name: todo,
   });
 
-  res.status(201).json(createTodo);
+  if (createdTodo) {
+    res.status(201).json(createdTodo);
+  }
 });
 
 // update a todo
