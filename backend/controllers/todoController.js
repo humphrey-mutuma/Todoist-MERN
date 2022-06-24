@@ -26,20 +26,20 @@ const createTodo = asyncHandler(async (req, res) => {
 // update a todo
 const updateTodo = asyncHandler(async (req, res) => {
   // check if the todo exists in the database
-  const oldTodo = await Todo.findById(req.params.id);
-  if (!oldTodo) {
+  const todo = await Todo.findById(req.params.id);
+  if (!todo) {
     res.status(404);
     throw new Error("Todo does not exist");
   }
   // update
-  const newName = req.body.name;
+  const newName = req.body;
 
   if (!newName) {
     res.status(400);
     throw new Error("Please add a todo name");
   }
-  const updatedTodo = await Todo.findByIdAndUpdate(todoId, {
-    name: newName,
+  const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, newName, {
+    new: true,
   });
 
   if (updatedTodo) {
@@ -49,12 +49,16 @@ const updateTodo = asyncHandler(async (req, res) => {
 
 // delete a todo
 const deleteTodo = asyncHandler(async (req, res) => {
-  const goalId = req.params.id;
-  if (!goalId) {
+  const todo = await Todo.findById(req.params.id);
+  if (!todo) {
     res.status(400);
-    throw new Error("Please add a goal ID");
+    throw new Error("Please add a todo ID");
   }
-  res.status(200).json({ message: `delete  todo ${goalId}` });
+  // delete the specific todo
+  const deletedTodo = await Todo.findByIdAndRemove(req.params.id);
+  if (deletedTodo) {
+    res.status(200).json({ message: `${todo.name} deleted` });
+  }
 });
 
 module.exports = { getTodos, createTodo, updateTodo, deleteTodo };
