@@ -6,66 +6,16 @@ import {
   EyeIcon,
   EditIcon,
 } from "./TableIcons";
+import { users } from "../data.js";
 
 export default function App() {
+
   const columns = [
     { name: "NAME", uid: "name" },
-    { name: "ROL", uid: "role" },
-    { name: "STATUS", uid: "status" },
+    { name: "PRIORITY", uid: "priority" },
     { name: "ACTIONS", uid: "actions" },
   ];
-  const users = [
-    {
-      id: 1,
-      name: "Tony Reichert",
-      role: "CEO",
-      team: "Management",
-      status: "active",
-      age: "29",
-      avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-      email: "tony.reichert@example.com",
-    },
-    {
-      id: 2,
-      name: "Zoey Lang",
-      role: "Technical Lead",
-      team: "Development",
-      status: "paused",
-      age: "25",
-      avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-      email: "zoey.lang@example.com",
-    },
-    {
-      id: 3,
-      name: "Jane Fisher",
-      role: "Senior Developer",
-      team: "Development",
-      status: "active",
-      age: "22",
-      avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-      email: "jane.fisher@example.com",
-    },
-    {
-      id: 4,
-      name: "William Howard",
-      role: "Community Manager",
-      team: "Marketing",
-      status: "vacation",
-      age: "28",
-      avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-      email: "william.howard@example.com",
-    },
-    {
-      id: 5,
-      name: "Kristen Copper",
-      role: "Sales Manager",
-      team: "Sales",
-      status: "active",
-      age: "24",
-      avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
-      email: "kristen.cooper@example.com",
-    },
-  ];
+
   const renderCell = (user, columnKey) => {
     const cellValue = user[columnKey];
     switch (columnKey) {
@@ -75,23 +25,8 @@ export default function App() {
             {user.email}
           </User>
         );
-      case "role":
-        return (
-          <Col>
-            <Row>
-              <Text b size={14} css={{ tt: "capitalize" }}>
-                {cellValue}
-              </Text>
-            </Row>
-            <Row>
-              <Text b size={13} css={{ tt: "capitalize", color: "$accents7" }}>
-                {user.team}
-              </Text>
-            </Row>
-          </Col>
-        );
-      case "status":
-        return <StyledBadge type={user.status}>{cellValue}</StyledBadge>;
+      case "priority":
+        return <StyledBadge type={user.priority}>{cellValue}</StyledBadge>;
 
       case "actions":
         return (

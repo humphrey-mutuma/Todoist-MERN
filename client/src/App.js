@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:5000/api/todos",
+      url: `${process.env.REACT_APP_ROOT_URL}/api/todos`,
       headers: {
         "Content-Type": "application/json",
       },
