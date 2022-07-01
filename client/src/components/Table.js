@@ -1,55 +1,41 @@
-import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
-import {
-  StyledBadge,
-  DeleteIcon,
-  IconButton,
-  EyeIcon,
-  EditIcon,
-} from "./TableIcons";
+import { Table, Row, Col, Tooltip, User } from "@nextui-org/react";
+import { DeleteIcon, IconButton, EyeIcon, EditIcon } from "./TableIcons";
 import { users } from "../data.js";
 
 export default function App() {
-
   const columns = [
     { name: "NAME", uid: "name" },
-    { name: "PRIORITY", uid: "priority" },
     { name: "ACTIONS", uid: "actions" },
   ];
 
   const renderCell = (user, columnKey) => {
     const cellValue = user[columnKey];
+
     switch (columnKey) {
       case "name":
-        return (
-          <User squared src={user.avatar} name={cellValue} css={{ p: 0 }}>
-            {user.email}
-          </User>
-        );
-      case "priority":
-        return <StyledBadge type={user.priority}>{cellValue}</StyledBadge>;
-
+        return <User name={cellValue} css={{ p: 0 }}></User>;
       case "actions":
         return (
           <Row justify="center" align="center">
             <Col css={{ d: "flex" }}>
               <Tooltip content="Details">
-                <IconButton onClick={() => console.log("View user", user.id)}>
+                <IconButton onClick={() => console.log("View Todo", user.id)}>
                   <EyeIcon size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
-              <Tooltip content="Edit user">
-                <IconButton onClick={() => console.log("Edit user", user.id)}>
+              <Tooltip content="Edit Todo">
+                <IconButton onClick={() => console.log("Edit Todo", user.id)}>
                   <EditIcon size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
               <Tooltip
-                content="Delete user"
+                content="Delete Todo"
                 color="error"
-                onClick={() => console.log("Delete user", user.id)}
+                onClick={() => console.log("Delete Todo", user.id)}
               >
                 <IconButton>
                   <DeleteIcon size={20} fill="#FF0080" />
@@ -62,6 +48,7 @@ export default function App() {
         return cellValue;
     }
   };
+  
   return (
     <Table
       aria-label="Example table with custom cells"
@@ -69,7 +56,9 @@ export default function App() {
         height: "auto",
         minWidth: "100%",
       }}
-      selectionMode="none"
+      selectionMode="single"
+      
+       
     >
       <Table.Header columns={columns}>
         {(column) => (
@@ -82,6 +71,7 @@ export default function App() {
           </Table.Column>
         )}
       </Table.Header>
+      
       <Table.Body items={users}>
         {(item) => (
           <Table.Row>

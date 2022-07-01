@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${process.env.REACT_APP_ROOT_URL}/api/todos`,
+      url: `http://localhost:5000/api/todos`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -17,7 +17,7 @@ function App() {
       setTodos(res.data);
       console.log(todos);
     });
-  }, [todos]);
+  }, []);
 
   return (
     <main className="w-full">
