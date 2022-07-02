@@ -1,86 +1,87 @@
-import { Table, Row, Col, Tooltip, User } from "@nextui-org/react";
-import { DeleteIcon, IconButton, EyeIcon, EditIcon } from "./TableIcons";
-import { users } from "../data.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Loading } from "@nextui-org/react";
+import {TrashIcon, EyeIcon,PencilAltIcon,} from '@heroicons/react/outline'
+
 
 export default function App() {
-  const columns = [
-    { name: "NAME", uid: "name" },
-    { name: "ACTIONS", uid: "actions" },
-  ];
+  const [todos, setTodos] = useState([]);
 
-  const renderCell = (user, columnKey) => {
-    const cellValue = user[columnKey];
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `http://localhost:5000/api/todos`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setTodos(res.data);
+    });
+  }, []);
 
-    switch (columnKey) {
-      case "name":
-        return <User name={cellValue} css={{ p: 0 }}></User>;
-      case "actions":
-        return (
-          <Row justify="center" align="center">
-            <Col css={{ d: "flex" }}>
-              <Tooltip content="Details">
-                <IconButton onClick={() => console.log("View Todo", user.id)}>
-                  <EyeIcon size={20} fill="#979797" />
-                </IconButton>
-              </Tooltip>
-            </Col>
-            <Col css={{ d: "flex" }}>
-              <Tooltip content="Edit Todo">
-                <IconButton onClick={() => console.log("Edit Todo", user.id)}>
-                  <EditIcon size={20} fill="#979797" />
-                </IconButton>
-              </Tooltip>
-            </Col>
-            <Col css={{ d: "flex" }}>
-              <Tooltip
-                content="Delete Todo"
-                color="error"
-                onClick={() => console.log("Delete Todo", user.id)}
-              >
-                <IconButton>
-                  <DeleteIcon size={20} fill="#FF0080" />
-                </IconButton>
-              </Tooltip>
-            </Col>
-          </Row>
-        );
-      default:
-        return cellValue;
-    }
-  };
-  
+  console.log(todos);
   return (
-    <Table
-      aria-label="Example table with custom cells"
-      css={{
-        height: "auto",
-        minWidth: "100%",
-      }}
-      selectionMode="single"
-      
-       
-    >
-      <Table.Header columns={columns}>
-        {(column) => (
-          <Table.Column
-            key={column.uid}
-            hideHeader={column.uid === "actions"}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </Table.Column>
-        )}
-      </Table.Header>
-      
-      <Table.Body items={users}>
-        {(item) => (
-          <Table.Row>
-            {(columnKey) => (
-              <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
-            )}
-          </Table.Row>
-        )}
-      </Table.Body>
-    </Table>
+    <div className="flex flex-col">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <table className="min-w-full  border shadow-lg m-2 rounded-md ">
+              <thead className="bg-gray-500 rounded-md text-white border-b">
+                <tr>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Todo
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-center"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {todos  ? (
+                  todos?.map((todo) => (
+                    <tr
+                      key={todo._id}
+                      className="bg-white border-b transition w-full duration-300 ease-in-out hover:bg-gray-100"
+                    >
+                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        {todo.name}
+                      </td>
+
+                      <td className="text-sm text-gray-900  font-light px-6 py-4 whitespace-nowrap">
+                        <Icons />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <Loading />
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+export const Icons = () => {
+  return (
+    <div className="flex items-center justify-center space-x-5">
+    <span className="text-gray-600 p-2">
+      <EyeIcon className="h-5 w-5  border rounded-full" />
+    </span> <span className="text-gray-600">
+      <PencilAltIcon className="h-5 w-5" />
+    </span> <span className="text-gray-600">
+       <TrashIcon className="text-red-500 h-5 w-5" />
+    </span>
+      
+    </div>
+  );
+};

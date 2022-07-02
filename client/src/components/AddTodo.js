@@ -10,8 +10,10 @@ export default function AddTodo() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     setName(data.name);
+    
   };
   // send data to mongodb
   useEffect(() => {
