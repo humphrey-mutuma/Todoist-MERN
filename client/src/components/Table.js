@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "@nextui-org/react";
-import {TrashIcon, EyeIcon,PencilAltIcon,} from '@heroicons/react/outline'
-
+import { TrashIcon, EyeIcon, PencilAltIcon } from "@heroicons/react/outline";
+import { Link } from "react-router-dom";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -44,7 +44,7 @@ export default function App() {
                 </tr>
               </thead>
               <tbody>
-                {todos  ? (
+                {todos ? (
                   todos?.map((todo) => (
                     <tr
                       key={todo._id}
@@ -74,14 +74,21 @@ export default function App() {
 export const Icons = () => {
   return (
     <div className="flex items-center justify-center space-x-5">
-    <span className="text-gray-600 p-2">
-      <EyeIcon className="h-5 w-5  border rounded-full" />
-    </span> <span className="text-gray-600">
-      <PencilAltIcon className="h-5 w-5" />
-    </span> <span className="text-gray-600">
-       <TrashIcon className="text-red-500 h-5 w-5" />
-    </span>
-      
+      <Link to="/">
+        <span className="text-gray-600 p-2">
+          <EyeIcon className="h-5 w-5  border rounded-full" />
+        </span>
+      </Link>
+      <Link to="/edit">
+        <span className="text-gray-600">
+          <PencilAltIcon className="h-5 w-5" />
+        </span>
+      </Link>
+      <Link to="/">
+        <span className="text-gray-600">
+          <TrashIcon className="text-red-500 h-5 w-5" />
+        </span>
+      </Link>
     </div>
   );
 };
