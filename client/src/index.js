@@ -4,12 +4,25 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { NextUIProvider } from "@nextui-org/react";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EditTodo from "./pages/EditTodo";
+import Home from "./pages/Home";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <NextUIProvider disableBaseline>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="edit" element={<EditTodo />}>
+              {/* <Route path=":teamId" element={<Team />} />
+              <Route path="new" element={<NewTeamForm />} />
+              <Route index element={<LeagueStandings />} /> */}
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </NextUIProvider>
   </React.StrictMode>
 );
