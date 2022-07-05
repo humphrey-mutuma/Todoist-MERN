@@ -1,12 +1,16 @@
+// import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EditTodo from "./pages/EditTodo";
 import Home from "./pages/Home";
 
 function App() {
   return (
     <main className="w-full">
-      <section >
-        <Home />
-       
-      </section>
+      {/* <BrowserRouter> */}
+      <Routes>
+        <Route path="/" element={<EditTodo />} />
+      </Routes>
+      {/* </BrowserRouter> */}
     </main>
   );
 }
