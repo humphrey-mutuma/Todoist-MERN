@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Input, styled } from "@nextui-org/react";
 import axios from "axios";
+import { Card, Grid, Text } from "@nextui-org/react";
 
 export default function EditTodo() {
   const [todoDetails, setTodoDetails] = useState("");
-  const [editedTodo, setEditedTodo] = useState("");
+  const [editedTodo, setEditedTodo] = useState(null);
   const {
     register,
     handleSubmit,
@@ -34,11 +35,12 @@ export default function EditTodo() {
     setEditedTodo(data.name);
     reset();
   };
+
   // update todo on the database
   useEffect(() => {
     axios
       .put(`http://localhost:5000/api/todos/${todoId}`, {
-        name: editedTodo,
+        name: (editedTodo !== null || editedTodo !== " ") && editedTodo,
       })
       .then((res) => {
         console.log(res);
@@ -46,37 +48,48 @@ export default function EditTodo() {
       .catch((error) => {
         console.log(error);
       });
-  }, [editedTodo, todoId]);
+  }, [editedTodo, todoDetails, todoId]);
 
   // update a todo
   return (
     <div className="container bg-gray-50 p-5">
-      <h1>Edit Todo and Submit</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-2 mt-5 flex flex-col w-fit "
-      >
-        <Input
-          aria-label="Close"
-          clearable
-          contentRightStyling={false}
-          placeholder={todoDetails}
-          status="primary"
-          {...register("name", { required: true })}
-          contentRight={
-            <SendButton>
-              <SendIcon />
-            </SendButton>
-          }
-        />
+      <Grid.Container gap={2}>
+        <Grid sm={12} md={5}>
+          <Card css={{ mw: "330px" }}>
+            <Card.Header>
+              <Text b>Edit Todo and Submit</Text>
+            </Card.Header>
+            <Card.Divider />
+            <Card.Body css={{ py: "$10" }}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="p-2 flex flex-col w-fit "
+              >
+                <Input
+                  aria-label="Close"
+                  clearable
+                  contentRightStyling={false}
+                  placeholder={todoDetails}
+                  status="primary"
+                  {...register("name", { required: true })}
+                  contentRight={
+                    <SendButton>
+                      <SendIcon />
+                    </SendButton>
+                  }
+                />
 
-        {/* errors will return when field validation fails  */}
-        {errors.name && (
-          <span className="text-red-500 font-serif p-1">
-            This field is required
-          </span>
-        )}
-      </form>
+                {/* errors will return when field validation fails  */}
+                {errors.name && (
+                  <span className="text-red-500 font-serif p-1">
+                    This field is required
+                  </span>
+                )}
+              </form>
+            </Card.Body>
+          </Card>
+        </Grid>
+      </Grid.Container>
     </div>
   );
 }

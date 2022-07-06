@@ -7,12 +7,14 @@ import { NextUIProvider } from "@nextui-org/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EditTodo from "./pages/EditTodo";
 import Details from "./pages/Details";
+import Navbar from "./components/Navbar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <NextUIProvider disableBaseline>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="edittodo" element={<EditTodo />}>
