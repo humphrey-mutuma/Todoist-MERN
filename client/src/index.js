@@ -4,15 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { NextUIProvider } from "@nextui-org/react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EditTodo from "./pages/EditTodo";
+import Details from "./pages/Details";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
+  <React.StrictMode>
     <NextUIProvider disableBaseline>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="edittodo" element={<EditTodo />} />
+          <Route path="details" element={<Details />} />
+        </Routes>
+      </BrowserRouter>
     </NextUIProvider>
-  </BrowserRouter>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
