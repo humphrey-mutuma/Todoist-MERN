@@ -15,8 +15,12 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="edittodo" element={<EditTodo />} />
-          <Route path="details" element={<Details />} />
+          <Route path="edittodo" element={<EditTodo />}>
+            <Route path=":todoId" element={<EditTodo />} />
+          </Route>
+          <Route path="details" element={<Details />}>
+            <Route path=":todoId" element={<Details />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </NextUIProvider>

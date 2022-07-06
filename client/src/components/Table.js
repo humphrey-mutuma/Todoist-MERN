@@ -21,7 +21,7 @@ export default function App() {
 
   console.log(todos);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col container">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
@@ -55,7 +55,7 @@ export default function App() {
                       </td>
 
                       <td className="text-sm text-gray-900  font-light px-6 py-4 whitespace-nowrap">
-                        <Icons />
+                        <Icons todoId={todo._id} />
                       </td>
                     </tr>
                   ))
@@ -71,24 +71,22 @@ export default function App() {
   );
 }
 
-export const Icons = () => {
+export const Icons = ({ todoId }) => {
   return (
-    <div className="flex items-center justify-center space-x-5">
-      <Link to="/">
+    <section className="flex items-center justify-center space-x-5">
+      <Link to={`/details/${todoId}`}>
         <span className="text-gray-600 p-2">
           <EyeIcon className="h-5 w-5  border rounded-full" />
         </span>
       </Link>
-      <Link to="/edit">
+      <Link to={`/edittodo/${todoId}`}>
         <span className="text-gray-600">
           <PencilAltIcon className="h-5 w-5" />
         </span>
       </Link>
-      <Link to="/">
-        <span className="text-gray-600">
-          <TrashIcon className="text-red-500 h-5 w-5" />
-        </span>
-      </Link>
-    </div>
+      <span className="text-gray-600 cursor-pointer">
+        <TrashIcon className="text-red-500 h-5 w-5" />
+      </span>
+    </section>
   );
 };

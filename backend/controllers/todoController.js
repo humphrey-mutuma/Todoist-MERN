@@ -1,9 +1,14 @@
 const asyncHandler = require("express-async-handler");
 const Todo = require("../models/todo");
-// get them todos
 
+// get them todos
 const getTodos = asyncHandler(async (req, res) => {
   const todo = await Todo.find();
+  res.status(200).json(todo);
+});
+// get a single todo
+const getTodo = asyncHandler(async (req, res) => {
+  const todo = await Todo.findById(req.params.id);
   res.status(200).json(todo);
 });
 
@@ -61,4 +66,4 @@ const deleteTodo = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getTodos, createTodo, updateTodo, deleteTodo };
+module.exports = { getTodos, getTodo, createTodo, updateTodo, deleteTodo };
