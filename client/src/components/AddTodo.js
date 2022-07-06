@@ -8,12 +8,13 @@ export default function AddTodo() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     setName(data.name);
-    
+    reset();
   };
   // send data to mongodb
   useEffect(() => {

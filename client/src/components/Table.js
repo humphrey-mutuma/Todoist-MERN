@@ -72,6 +72,24 @@ export default function App() {
 }
 
 export const Icons = ({ todoId }) => {
+  const [deleteTodo, setDeleteTodo] = useState({});
+
+  const HandleDeleteTodo = ({ todoId }) => {
+    axios({
+      method: "DELETE",
+      url: `http://localhost:5000/api/todos/${todoId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        setDeleteTodo(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <section className="flex items-center justify-center space-x-5">
       <Link to={`/details/${todoId}`}>
@@ -84,7 +102,10 @@ export const Icons = ({ todoId }) => {
           <PencilAltIcon className="h-5 w-5" />
         </span>
       </Link>
-      <span className="text-gray-600 cursor-pointer">
+      <span
+        onClick={HandleDeleteTodo(todoId)}
+        className="text-gray-600 cursor-pointer"
+      >
         <TrashIcon className="text-red-500 h-5 w-5" />
       </span>
     </section>
