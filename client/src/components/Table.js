@@ -3,6 +3,8 @@ import axios from "axios";
 import { Loading } from "@nextui-org/react";
 import { TrashIcon, EyeIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -10,7 +12,7 @@ export default function App() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:5000/api/todos`,
+      url: `${process.env.REACT_APP_API_URL}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -18,8 +20,7 @@ export default function App() {
       setTodos(res.data);
     });
   }, []);
-
-  console.log(todos);
+  // console.log(todos);
   return (
     <div className="flex flex-col container">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -65,6 +66,7 @@ export default function App() {
               </tbody>
             </table>
           </div>
+          <ToastContainer position="bottom-right" />
         </div>
       </div>
     </div>
@@ -72,9 +74,10 @@ export default function App() {
 }
 
 export const Icons = ({ todoId }) => {
-  const [deleteTodo, setDeleteTodo] = useState({});
+  const [deleteTodo, setDeleteTodo] = useState("");
 
   const HandleDeleteTodo = () => {
+    console.log(todoId, "Deleted");
     axios({
       method: "DELETE",
       url: `http://localhost:5000/api/todos/${todoId}`,
@@ -83,13 +86,14 @@ export const Icons = ({ todoId }) => {
       },
     })
       .then((res) => {
-        setDeleteTodo(res.data);
+        setDeleteTodo(res.data.message);
+        toast(res.data.message);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  console.log( "DELETED ",deleteTodo );
+  console.log(deleteTodo);
 
   return (
     <section className="flex items-center justify-center space-x-5">
