@@ -80,7 +80,7 @@ export const Icons = ({ todoId }) => {
     console.log(todoId, "Deleted");
     axios({
       method: "DELETE",
-      url: `http://localhost:5000/api/todos/${todoId}`,
+      url: `${process.env.REACT_APP_API_URL}/${todoId}`,
       headers: {
         "Content-Type": "application/json",
       },

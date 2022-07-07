@@ -19,7 +19,7 @@ export default function AddTodo() {
   // send data to mongodb
   useEffect(() => {
     axios
-      .post(`http://localhost:5000/api/todos`, {
+      .post(`${process.env.REACT_APP_API_URL}`, {
         name: name,
       })
       .then((res) => {

@@ -13,7 +13,7 @@ export default function Details() {
   // fetch a particular todo from the database
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/todos/${todoId}`)
+      .get(`${process.env.REACT_APP_API_URL}/${todoId}`)
       .then((res) => {
         setTodoDetails(res.data.name);
       })

@@ -21,7 +21,7 @@ export default function EditTodo() {
   // get the particular todo from the database
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/todos/${todoId}`)
+      .get(`${process.env.REACT_APP_API_URL}/${todoId}`)
       .then((res) => {
         setTodoDetails(res.data.name);
       })
@@ -39,7 +39,7 @@ export default function EditTodo() {
   // update todo on the database
   useEffect(() => {
     axios
-      .put(`http://localhost:5000/api/todos/${todoId}`, {
+      .put(`${process.env.REACT_APP_API_URL}/${todoId}`, {
         name: (editedTodo !== null || editedTodo !== " ") && editedTodo,
       })
       .then((res) => {

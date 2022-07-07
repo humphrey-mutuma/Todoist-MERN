@@ -1,7 +1,5 @@
 import React from "react";
 import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
-// import { Mail } from "./Mail";
-// import { Password } from "./Password";
 
 export default function SignIn() {
   const [visible, setVisible] = React.useState(false);
