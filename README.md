@@ -1,17 +1,19 @@
 # Getting Started with MERN stack 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) (client) and a Node-Express server with MongoDb atlas Database
-## .env Requirements
-### Client 
-##### `REACT_APP_API_URL=http://localhost:5000/api/todos`
+#### .env Requirements
+#### Client 
+```
+ * REACT_APP_API_URL=http://localhost:5000/api/todos
+```
+#### Server
 
-## Server
-
-#### `MONGO_URI =   YOUR MONGODB ATLAS URI`
-#### `NODE_ENV = development`
-#### `PORT = 5000`
-#### `JWT_SECRET= "mysecret"`
-      
+```
+  * MONGO_URI =   YOUR MONGODB ATLAS URI
+  * NODE_ENV = development
+  * PORT = 5000
+  * JWT_SECRET= "mysecret"
+```
 ## Available Scripts
 
 In the project directory, you can run:
